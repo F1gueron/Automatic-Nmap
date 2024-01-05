@@ -56,9 +56,9 @@ shift $((OPTIND-1))
 # Run Nmap scan to retrieve open ports
 echo -e "${ORANGE}Running Nmap scan for the open ports in $target...${NC}"
 if [ "$udp_scan" = true ]; then
-    open_ports=$(sudo nmap -p- --open -sS -sU -Pn --min-rate=7500 -T4 $target -oN "open_ports_$target"| grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed 's/,$//') 
+    open_ports=$(sudo nmap -p- --open -sS -sU -Pn --min-rate=7500 -T4 $target -oN "open_ports_UDP_$target"| grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed 's/,$//') 
 else
-    open_ports=$(sudo nmap -p- --open -sS -Pn --min-rate=7500 -T4 $target -oN "open_ports_$target"| grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed 's/,$//') 
+    open_ports=$(sudo nmap -p- --open -sS -Pn --min-rate=7500 -T4 $target -oN "open_ports_TCP_$target"| grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed 's/,$//') 
 fi
 
 if [ -z "$open_ports" ]; then
@@ -72,9 +72,9 @@ echo -e "${GREEN}[+]Scan completed! Open ports saved in open_ports_$target${NC}"
 # Run detailed Nmap scan for open ports
 echo -e "${ORANGE}Now, scanning for the info of the ports${NC}"
 if [ "$udp_scan" = true ]; then
-  info_ports=$(sudo nmap -p $open_ports -sCV -sU $target -oN "info_ports_$target")
+  info_ports=$(sudo nmap -p $open_ports -sCV -sU $target -oN "info_ports_UDP_$target")
 else
-  info_ports=$(sudo nmap -p $open_ports -sCV $target -oN "info_ports_$target")
+  info_ports=$(sudo nmap -p $open_ports -sCV $target -oN "info_ports_UDP_$target")
 fi
 
 echo -e "${GREEN}[+]Scan completed! info of open ports saved in info_ports_$target"

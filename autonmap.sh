@@ -59,9 +59,9 @@ shift $((OPTIND-1))
 # Run Nmap scan to retrieve open ports
 echo -e "${ORANGE}Running Nmap scan for the open ports in $target...${NC}"
 if [ "$udp_scan" = true ]; then
-    open_ports=$(sudo nmap -p- --open -sS -sU -Pn --min-rate=7500 -T4 $target -oN "open_ports_$target"| grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed 's/,$//') 
+    open_ports=$(sudo nmap -p- --open -sS -sU -Pn --min-rate=10000 -T4 $target -oN "open_ports_$target"| grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed 's/,$//') 
 else
-    open_ports=$(sudo nmap -p- --open -sS -Pn --min-rate=7500 -T4 $target -oN "open_ports_$target"| grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed 's/,$//') 
+    open_ports=$(sudo nmap -p- --open -sS -Pn --min-rate=10000 -T4 $target -oN "open_ports_$target"| grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed 's/,$//') 
 fi
 
 if [ -z "$open_ports" ]; then
